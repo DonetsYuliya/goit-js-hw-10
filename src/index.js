@@ -6,6 +6,8 @@ var debounce = require('lodash.debounce');
 
 const DEBOUNCE_DELAY = 300;
 
+export const URL = `https://restcountries.com/v3.1/name/`;
+
 const ref = {
   input: document.querySelector('#search-box'),
   list: document.querySelector('.country-list'),
