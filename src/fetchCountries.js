@@ -1,8 +1,7 @@
-import { name } from '.';
 import { URL } from '.';
 
-export const fetchCountries = () => {
-  return fetch(`${URL}${name}?name,capital,population,flags,languages`).then(
+export const fetchCountries = value => {
+  return fetch(`${URL}${value}?name,capital,population,flags,languages`).then(
     response => {
       if (!response.ok) {
         throw new Error(response.status);
