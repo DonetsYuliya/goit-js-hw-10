@@ -20,20 +20,16 @@ export let name = '';
 const handelInput = () => {
   const value = ref.input.value.trim();
 
-  if (!value) return;
+  ref.list.innerHTML = '';
+  ref.countryInfo.innerHTML = '';
 
-  if (value !== name) {
-    ref.list.innerHTML = '';
-    ref.countryInfo.innerHTML = '';
-    name = value;
-  }
+  if (!value) return;
+  name = value;
 
   fetchCountries()
     .then(toShowCountries)
     .catch(error => {
       Notiflix.Notify.failure('Oops, there is no country with that name');
-      ref.list.innerHTML = '';
-      ref.countryInfo.innerHTML = '';
     });
 };
 
@@ -42,7 +38,7 @@ ref.input.addEventListener('input', debounce(handelInput, DEBOUNCE_DELAY));
 const renderCountries = countriesArrya => {
   const country = countriesArrya
     .map(({ name: { official }, flags: { svg } }) => {
-      return `<li class="country-item" style="list-style:none; display:flex; align-items:center; justify-items: flex-start;">
+      return `<li class="country-item" style="list-style:none; display:flex; align-items:center;">
   <img src="${svg}" alt="flag" class="country-flag" style="margin-right:20px;" width=50 height=30/>
   <p class="country-name__official"><b>${official}</b></p>
 </li>`;
@@ -58,7 +54,7 @@ const renderCountryInformation = countriesArrya => {
       <p class="country-population"><b>Population</b>: ${population}</p>
       <p class="country-languages"><b>Languages</b>: ${Object.values(
         languages
-      )}</p>`;
+      ).join(', ')}</p>`;
     })
     .join(' ');
   ref.countryInfo.innerHTML = info;
